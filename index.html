@@ -105,10 +105,18 @@
         <div class="form-group">
           <label>Company</label>
           <select id="company" class="form-control">
-            <option value="sonic-hq">SONIC INTERFREIGHT PUBLIC COMPANY LIMITED</option>
-            <option value="grandlink">GRANDLINK LOGISTICS CO., LTD.</option>
-            <option value="sonic-b1">SONIC INTERFREIGHT PUBLIC COMPANY LIMITED (BRANCH 00001)</option>
-            <option value="sonic-b2">SONIC INTERFREIGHT PUBLIC COMPANY LIMITED (BRANCH 00002)</option>
+          <option value="sonic-hq">SONIC INTERFREIGHT PUBLIC COMPANY LIMITED (HEAD OFFICE)</option>
+          <option value="grandlink">GRANDLINK LOGISTICS CO., LTD.</option>
+          <option value="sonic-b1">SONIC INTERFREIGHT PUBLIC COMPANY LIMITED (BRANCH 00001)</option>
+          <option value="sonic-b2">SONIC INTERFREIGHT PUBLIC COMPANY LIMITED (BRANCH 00002)</option>
+          <option value="sonic-b3">SONIC INTERFREIGHT PUBLIC COMPANY LIMITED (BRANCH 00003)</option>
+          <option value="sonic-b4">SONIC INTERFREIGHT PUBLIC COMPANY LIMITED (BRANCH 00004)</option>
+          <option value="sonic-b5">SONIC INTERFREIGHT PUBLIC COMPANY LIMITED (BRANCH 00005)</option>
+          <option value="sonic-auto-hq">SONIC AUTOLOGIS CO., LTD. (HEAD OFFICE)</option>
+          <option value="sonic-auto-b1">SONIC AUTOLOGIS CO., LTD. (BRANCH 00001)</option>
+          <option value="sonic-auto-b2">SONIC AUTOLOGIS CO., LTD. (BRANCH 00002)</option>
+          <option value="sonic-auto-b3">SONIC AUTOLOGIS CO., LTD. (BRANCH 00003)</option>
+          <option value="sonic-inter-b6">SONIC INTERFREIGHT CO.,LTD. (BRANCH 00006)</option>
           </select>
         </div>
         
@@ -190,33 +198,82 @@
   
   <script>
     // Company data
-    const companies = {
+ const companies = {
       "sonic-hq": {
         name: "SONIC INTERFREIGHT PUBLIC COMPANY LIMITED",
-        branch: "(HEAD OFFICE)",
+        branchCode: "(HEAD OFFICE)",
         address: "79/349-350 Sathupradit Road, Chongnonsee, Yannawa, Bangkok 10120, Thailand",
         taxId: "0107558000407"
       },
       "grandlink": {
         name: "GRANDLINK LOGISTICS CO., LTD.",
-        branch: "",
+        branchCode: "",
         address: "79/349-350 Sathupradit Road, Chongnonsee, Yannawa, Bangkok 10120, Thailand",
         taxId: "0105554045111"
       },
       "sonic-b1": {
         name: "SONIC INTERFREIGHT PUBLIC COMPANY LIMITED",
-        branch: "(BRANCH 00001)",
+        branchCode: "(BRANCH 00001)",
         address: "84/41 Nonsee Road, Chongnonsee, Yannawa, Bangkok 10120, Thailand",
         taxId: "0107558000407"
       },
       "sonic-b2": {
         name: "SONIC INTERFREIGHT PUBLIC COMPANY LIMITED",
-        branch: "(BRANCH 00002)",
+        branchCode: "(BRANCH 00002)",
         address: "4/3 Moo 7, Bangna-Trad Road Km.23, Bang Sao Thong, Samut Prakan 10570, Thailand",
+        taxId: "0107558000407"
+      },
+      "sonic-b3": {
+        name: "SONIC INTERFREIGHT PUBLIC COMPANY LIMITED",
+        branchCode: "(BRANCH 00003)",
+        address: "188/152 Moo 3, Map Yang Phon, Pluak Daeng, Rayong 21140, Thailand",
+        taxId: "0107558000407"
+      },
+      "sonic-b4": {
+        name: "SONIC INTERFREIGHT PUBLIC COMPANY LIMITED",
+        branchCode: "(BRANCH 00004)",
+        address: "110/4 Moo 6, Ban Mai, Muang Chanthaburi, Chanthaburi 22000, Thailand",
+        taxId: "0107558000407"
+      },
+      "sonic-b5": {
+        name: "SONIC INTERFREIGHT PUBLIC COMPANY LIMITED",
+        branchCode: "(BRANCH 00005)",
+        address: "149/30 Moo 7, Ko Loi, Muang Laem Chabang, Chonburi 20230, Thailand",
+        taxId: "0107558000407"
+      },
+      "sonic-auto-hq": {
+        name: "SONIC AUTOLOGIS CO., LTD.",
+        branchCode: "(HEAD OFFICE)",
+        address: "79/349-350 Sathupradit Road, Chongnonsee, Yannawa, Bangkok 10120, Thailand",
+        taxId: "0105563017035"
+      },
+      "sonic-auto-b1": {
+        name: "SONIC AUTOLOGIS CO., LTD.",
+        branchCode: "(BRANCH 00001)",
+        address: "79/349-350 Sathupradit Road, Chongnonsee, Yannawa, Bangkok 10120, Thailand",
+        taxId: "0105563017035"
+      },
+      "sonic-auto-b2": {
+        name: "SONIC AUTOLOGIS CO., LTD.",
+        branchCode: "(BRANCH 00002)",
+        address: "79/349-350 Sathupradit Road, Chongnonsee, Yannawa, Bangkok 10120, Thailand",
+        taxId: "0105563017035"
+      },
+      "sonic-auto-b3": {
+        name: "SONIC AUTOLOGIS CO., LTD.",
+        branchCode: "(BRANCH 00003)",
+        address: "79/349-350 Sathupradit Road, Chongnonsee, Yannawa, Bangkok 10120, Thailand",
+        taxId: "0105563017035"
+      },
+      "sonic-inter-b6": {
+        name: "SONIC INTERFREIGHT CO.,LTD.",
+        branchCode: "(BRANCH 00006)",
+        address: "79/349-350 Sathupradit Road, Chongnonsee, Yannawa, Bangkok 10120, Thailand",
         taxId: "0107558000407"
       }
     };
-    
+
+
     // DOM elements
     const generateButton = document.getElementById('generateButton');
     const copyButton = document.getElementById('copyButton');
