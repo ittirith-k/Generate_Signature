@@ -227,101 +227,101 @@
   <div id="notification" class="notification">Signature copied to clipboard!</div>
   
   <script>
-    // Company data
+    // Company data with absolute URLs for logos
     const companies = {
       "sonic-hq": {
         name: "SONIC INTERFREIGHT PUBLIC COMPANY LIMITED",
         branchCode: "(HEAD OFFICE)",
         address: "79/349-350 Sathupradit Road, Chongnonsee, Yannawa, Bangkok 10120, Thailand",
         taxId: "0107558000407",
-        logo: "Logo/logo Sonic_e-mail.png"
+        logo: "https://www.sonic.co.th/wp-content/uploads/2023/07/logo-sonic-email.png" // Use absolute URL
       },
       "grandlink": {
         name: "GRANDLINK LOGISTICS CO., LTD.",
         branchCode: "",
         address: "79/349-350 Sathupradit Road, Chongnonsee, Yannawa, Bangkok 10120, Thailand",
         taxId: "0105554045111",
-        logo: "Logo/Logo Grandlink_e-mail.png"
+        logo: "https://www.sonic.co.th/wp-content/uploads/2023/07/logo-grandlink-email.png" // Use absolute URL
       },
       "sonic-b1": {
         name: "SONIC INTERFREIGHT PUBLIC COMPANY LIMITED",
         branchCode: "(BRANCH 00001)",
         address: "84/41 Nonsee Road, Chongnonsee, Yannawa, Bangkok 10120, Thailand",
         taxId: "0107558000407",
-        logo: "Logo/logo Sonic_e-mail.png"
+        logo: "https://www.sonic.co.th/wp-content/uploads/2023/07/logo-sonic-email.png" // Use absolute URL
       },
       "sonic-b2": {
         name: "SONIC INTERFREIGHT PUBLIC COMPANY LIMITED",
         branchCode: "(BRANCH 00002)",
         address: "4/3 Moo 7, Bangna-Trad Road Km.23, Bang Sao Thong, Samut Prakan 10570, Thailand",
         taxId: "0107558000407",
-        logo: "Logo/logo Sonic_e-mail.png"
+        logo: "https://www.sonic.co.th/wp-content/uploads/2023/07/logo-sonic-email.png" // Use absolute URL
       },
       "sonic-b3": {
         name: "SONIC INTERFREIGHT PUBLIC COMPANY LIMITED",
         branchCode: "(BRANCH 00003)",
         address: "188/152 Moo 3, Map Yang Phon, Pluak Daeng, Rayong 21140, Thailand",
         taxId: "0107558000407",
-        logo: "Logo/logo Sonic_e-mail.png"
+        logo: "https://www.sonic.co.th/wp-content/uploads/2023/07/logo-sonic-email.png" // Use absolute URL
       },
       "sonic-b4": {
         name: "SONIC INTERFREIGHT PUBLIC COMPANY LIMITED",
         branchCode: "(BRANCH 00004)",
         address: "110/4 Moo 6, Ban Mai, Muang Chanthaburi, Chanthaburi 22000, Thailand",
         taxId: "0107558000407",
-        logo: "Logo/logo Sonic_e-mail.png"
+        logo: "https://www.sonic.co.th/wp-content/uploads/2023/07/logo-sonic-email.png" // Use absolute URL
       },
       "sonic-b5": {
         name: "SONIC INTERFREIGHT PUBLIC COMPANY LIMITED",
         branchCode: "(BRANCH 00005)",
         address: "149/30 Moo 7, Ko Loi, Muang Laem Chabang, Chonburi 20230, Thailand",
         taxId: "0107558000407",
-        logo: "Logo/logo Sonic_e-mail.png"
+        logo: "https://www.sonic.co.th/wp-content/uploads/2023/07/logo-sonic-email.png" // Use absolute URL
       },
       "sonic-auto-hq": {
         name: "SONIC AUTOLOGIS CO., LTD.",
         branchCode: "(HEAD OFFICE)",
         address: "79/349-350 Sathupradit Road, Chongnonsee, Yannawa, Bangkok 10120, Thailand",
         taxId: "0105563017035",
-        logo: "Logo/logo Sonic AutoLogis_e-mail.png"
+        logo: "https://www.sonic.co.th/wp-content/uploads/2023/07/logo-sonic-autologis-email.png" // Use absolute URL
       },
       "sonic-auto-b1": {
         name: "SONIC AUTOLOGIS CO., LTD.",
         branchCode: "(BRANCH 00001)",
         address: "79/349-350 Sathupradit Road, Chongnonsee, Yannawa, Bangkok 10120, Thailand",
         taxId: "0105563017035",
-        logo: "Logo/logo Sonic AutoLogis_e-mail.png"
+        logo: "https://www.sonic.co.th/wp-content/uploads/2023/07/logo-sonic-autologis-email.png" // Use absolute URL
       },
       "sonic-auto-b2": {
         name: "SONIC AUTOLOGIS CO., LTD.",
         branchCode: "(BRANCH 00002)",
         address: "79/349-350 Sathupradit Road, Chongnonsee, Yannawa, Bangkok 10120, Thailand",
         taxId: "0105563017035",
-        logo: "Logo/logo Sonic AutoLogis_e-mail.png"
+        logo: "https://www.sonic.co.th/wp-content/uploads/2023/07/logo-sonic-autologis-email.png" // Use absolute URL
       },
       "sonic-auto-b3": {
         name: "SONIC AUTOLOGIS CO., LTD.",
         branchCode: "(BRANCH 00003)",
         address: "79/349-350 Sathupradit Road, Chongnonsee, Yannawa, Bangkok 10120, Thailand",
         taxId: "0105563017035",
-        logo: "Logo/logo Sonic AutoLogis_e-mail.png"
+        logo: "https://www.sonic.co.th/wp-content/uploads/2023/07/logo-sonic-autologis-email.png" // Use absolute URL
       },
       "sonic-inter-b6": {
         name: "SONIC INTERFREIGHT CO.,LTD.",
         branchCode: "(BRANCH 00006)",
         address: "79/349-350 Sathupradit Road, Chongnonsee, Yannawa, Bangkok 10120, Thailand",
         taxId: "0107558000407",
-        logo: "Logo/logo Sonic_e-mail.png"
+        logo: "https://www.sonic.co.th/wp-content/uploads/2023/07/logo-sonic-email.png" // Use absolute URL
       }
     };
     
-    // Social media logos (Base64 encoded for email compatibility)
+    // Social media logos (Use absolute URLs)
     const socialMediaLogos = {
-      line: "Logo/Line.png", // Replace with actual path or Base64 code
-      whatsapp: "Logo/Whatsapp.png", // Replace with actual path or Base64 code
-      wechat: "Logo/Wechat.png" // Replace with actual path or Base64 code
+      line: "https://www.sonic.co.th/wp-content/uploads/2023/07/line-icon.png", // Replace with actual path
+      whatsapp: "https://www.sonic.co.th/wp-content/uploads/2023/07/whatsapp-icon.png", // Replace with actual path
+      wechat: "https://www.sonic.co.th/wp-content/uploads/2023/07/wechat-icon.png" // Replace with actual path
     };
-
+    
     // DOM elements
     const copyButton = document.getElementById('copyButton');
     const signaturePreview = document.getElementById('signaturePreview');
@@ -373,61 +373,61 @@
       // Create social media HTML
       let socialMediaHtml = '';
       if (lineId || whatsapp || wechat) {
-        socialMediaHtml = '<p style="margin: 5px 0 0 0; font-size: 12px; display: flex; align-items: center;">';
+        socialMediaHtml = '<p style="margin: 5px 0 0 0; font-size: 12px; display: flex; align-items: center; background-color: #ffffff;">';
         
         if (lineId) {
           socialMediaHtml += `
-            <span style="display: inline-flex; align-items: center; margin-right: 10px;">
-              <img src="${socialMediaLogos.line}" alt="LINE" width="16" height="16" style="vertical-align: middle; margin-right: 3px;"> 
-              <span style="color: #047857;">LINE:</span> ${lineId}
+            <span style="display: inline-flex; align-items: center; margin-right: 10px; background-color: #ffffff;">
+              <img src="${socialMediaLogos.line}" alt="LINE" width="16" height="16" style="vertical-align: middle; margin-right: 3px; background-color: #ffffff;"> 
+              <span style="color: #047857; background-color: #ffffff;">LINE:</span> ${lineId}
             </span>`;
         }
         
         if (whatsapp) {
           socialMediaHtml += `
-            <span style="display: inline-flex; align-items: center; margin-right: 10px;">
-              <img src="${socialMediaLogos.whatsapp}" alt="WhatsApp" width="16" height="16" style="vertical-align: middle; margin-right: 3px;"> 
-              <span style="color: #047857;">WhatsApp:</span> ${whatsapp}
+            <span style="display: inline-flex; align-items: center; margin-right: 10px; background-color: #ffffff;">
+              <img src="${socialMediaLogos.whatsapp}" alt="WhatsApp" width="16" height="16" style="vertical-align: middle; margin-right: 3px; background-color: #ffffff;"> 
+              <span style="color: #047857; background-color: #ffffff;">WhatsApp:</span> ${whatsapp}
             </span>`;
         }
         
         if (wechat) {
           socialMediaHtml += `
-            <span style="display: inline-flex; align-items: center;">
-              <img src="${socialMediaLogos.wechat}" alt="WeChat" width="16" height="16" style="vertical-align: middle; margin-right: 3px;"> 
-              <span style="color: #047857;">WeChat:</span> ${wechat}
+            <span style="display: inline-flex; align-items: center; background-color: #ffffff;">
+              <img src="${socialMediaLogos.wechat}" alt="WeChat" width="16" height="16" style="vertical-align: middle; margin-right: 3px; background-color: #ffffff;"> 
+              <span style="color: #047857; background-color: #ffffff;">WeChat:</span> ${wechat}
             </span>`;
         }
         
         socialMediaHtml += '</p>';
       }
       
-      // Create signature HTML
+      // Create signature HTML with explicit background colors
       const signature = `
-        <div style="font-family: Arial, sans-serif; max-width: 600px;">
-          <div style="margin-bottom: 10px; font-size: 16px; font-weight: bold; color: #333;">Best Regards,<br></div>
-          <table cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse;">
-            <tr>
-              <td width="120" style="padding-right: 20px; vertical-align: top;">
-                <img src="${company.logo}" alt="${company.name} logo" width="120" style="display: block; border: 0;">
+        <div style="font-family: Arial, sans-serif; max-width: 600px; background-color: #ffffff;">
+          <div style="margin-bottom: 10px; font-size: 16px; font-weight: bold; color: #333; background-color: #ffffff;">Best Regards,<br></div>
+          <table cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse; background-color: #ffffff;">
+            <tr style="background-color: #ffffff;">
+              <td width="120" style="padding-right: 20px; vertical-align: top; background-color: #ffffff;">
+                <img src="${company.logo}" alt="${company.name} logo" width="120" style="display: block; border: 0; background-color: #ffffff;">
               </td>
-              <td style="vertical-align: top;">
-                <p style="margin: 0; font-size: 16px; font-weight: bold; color: #1e3a8a;">${formattedFirstName} ${formattedLastName}${formattedNickname}</p>
+              <td style="vertical-align: top; background-color: #ffffff;">
+                <p style="margin: 0; font-size: 16px; font-weight: bold; color: #1e3a8a; background-color: #ffffff;">${formattedFirstName} ${formattedLastName}${formattedNickname}</p>
                 <div style="height: 1px; width: 200px; background-color: #1e3a8a; margin: 5px 0;"></div>
-                <p style="margin: 0; font-size: 14px; font-weight: bold; color: #333;">${department}</p>
-                <p style="margin: 0; font-size: 12px; color: #555;">${position}</p>
-                <p style="margin: 5px 0 0 0; font-size: 12px; color: #047857;">${company.name} ${company.branchCode}</p>
-                <p style="margin: 0; font-size: 12px; color: #555;">${company.address}</p>
-                <p style="margin: 0; font-size: 12px; color: #555;">Tax ID: ${company.taxId} | Website: www.sonic.co.th</p>
-                ${office ? `<p style="margin: 5px 0 0 0; font-size: 12px;"><span style="color: #047857;">Tel:</span> ${office}${extension ? ` ext. ${extension}` : ''}</p>` : ''}
-                <p style="margin: 0; font-size: 12px;">
-                  ${mobile ? `<span style="color: #047857;">Mobile:</span> ${mobile}` : ''}
+                <p style="margin: 0; font-size: 14px; font-weight: bold; color: #333; background-color: #ffffff;">${department}</p>
+                <p style="margin: 0; font-size: 12px; color: #555; background-color: #ffffff;">${position}</p>
+                <p style="margin: 5px 0 0 0; font-size: 12px; color: #047857; background-color: #ffffff;">${company.name} ${company.branchCode}</p>
+                <p style="margin: 0; font-size: 12px; color: #555; background-color: #ffffff;">${company.address}</p>
+                <p style="margin: 0; font-size: 12px; color: #555; background-color: #ffffff;">Tax ID: ${company.taxId} | Website: www.sonic.co.th</p>
+                ${office ? `<p style="margin: 5px 0 0 0; font-size: 12px; background-color: #ffffff;"><span style="color: #047857; background-color: #ffffff;">Tel:</span> ${office}${extension ? ` ext. ${extension}` : ''}</p>` : ''}
+                <p style="margin: 0; font-size: 12px; background-color: #ffffff;">
+                  ${mobile ? `<span style="color: #047857; background-color: #ffffff;">Mobile:</span> ${mobile}` : ''}
                   ${mobile && email ? ' | ' : ''}
-                  ${email ? `<span style="color: #047857;">Email:</span> <a href="mailto:${email}" style="color: #2563eb;">${email}</a>` : ''}
+                  ${email ? `<span style="color: #047857; background-color: #ffffff;">Email:</span> <a href="mailto:${email}" style="color: #2563eb; background-color: #ffffff;">${email}</a>` : ''}
                 </p>
                 ${socialMediaHtml}
-                <p style="margin: 5px 0 0 0; font-size: 9px; color: #666; max-width: 400px;">
-                  <strong>Confidentiality & Disclaimer</strong><br>
+                <p style="margin: 5px 0 0 0; font-size: 9px; color: #666; max-width: 400px; background-color: #ffffff;">
+                  <strong style="background-color: #ffffff;">Confidentiality & Disclaimer</strong><br>
                   The information contained in this email may be confidential, proprietary and/or legally privileged. If you are not the intended recipient of this email, please delete and destroy all copies immediately. Any review, dissemination, copy, retransmission, distribution or use of this email in any form for any purpose is strictly prohibited. The sender accepted no responsibility for any miss transmission of, or interference with, this email. Thank you.
                 </p>
               </td>
