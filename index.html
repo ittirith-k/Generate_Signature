@@ -1,18 +1,12 @@
-# Encode the provided image as a base64 data URI and write an updated HTML file
-import base64, os, textwrap, json, pathlib
+# Regenerate using a safe placeholder for the cert image path to avoid f-string collisions
+cert_src = "Logo/All Logo Cer_Sonic Group-for email signature.png"
 
-img_path = "/mnt/data/79bcdea2-7e33-4b39-821a-3e0438ebbd09.png"
-with open(img_path, "rb") as f:
-    b64 = base64.b64encode(f.read()).decode("ascii")
-data_uri = f"data:image/png;base64,{b64}"
-
-# Create an updated HTML with the image inserted ABOVE the confidentiality paragraph
-html_content = """<!DOCTYPE html>
+html2 = """<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Email Signature Generator (with Cert Image)</title>
+  <title>Email Signature Generator (cert image by path)</title>
   <style>
     body { font-family: Arial, sans-serif; margin: 0; padding: 16px; background: #f3f4f6; }
     .container { max-width: 1200px; margin: 0 auto; display: flex; gap: 24px; }
@@ -110,9 +104,9 @@ html_content = """<!DOCTYPE html>
       "sonic-auto-b2": { name: "SONIC AUTOLOGIS CO., LTD.", branchCode: "(BRANCH 00002)", address: "84/1 Moo 15, King Kaew Road, Bang Phli Yai Sub-district, Bang Phli District, Samut Prakan 10540, Thailand", taxId: "0105568017319", logo: "Logo/logo Sonic AutoLogis_e-mail.png" },
       "sonic-auto-b3": { name: "SONIC AUTOLOGIS CO., LTD.", branchCode: "(BRANCH 00003)", address: "789/3 Moo 9, Bang Pla Sub-district, Bang Phli District, Samut Prakan 10540, Thailand", taxId: "0105568017319", logo: "Logo/logo Sonic AutoLogis_e-mail.png" }
     };
+
     const socialMediaLogos = { line: "Logo/Line.png", whatsapp: "Logo/Whatsapp.png", wechat: "Logo/Wechat.png" };
-    // Certificate image as inline base64 so it always renders in signatures
-    const CERT_IMAGE_DATA_URI = "%(DATAURI)s";
+    const CERT_IMAGE_SRC = "__CERT_SRC__";
 
     const copyButton = document.getElementById('copyButton');
     const signaturePreview = document.getElementById('signaturePreview');
@@ -177,9 +171,8 @@ html_content = """<!DOCTYPE html>
                   ${email ? `<span style="color: #047857; background-color: #ffffff;">Email:</span> <a href="mailto:${email}" style="color: #2563eb; background-color: #ffffff;">${email}</a>` : ''}
                 </p>
                 ${socialMediaHtml}
-                <!-- Insert certification image ABOVE the confidentiality paragraph -->
                 <div style="margin: 8px 0 4px 0; background-color: #ffffff;">
-                  <img src="${CERT_IMAGE_DATA_URI}" alt="Sonic Group Certifications" style="display:block; max-width: 420px; width: 100%; height: auto; background-color:#ffffff; border:0;">
+                  <img src="__CERT_SRC__" alt="Sonic Group Certifications" style="display:block; max-width: 420px; width: 100%; height: auto; background-color:#ffffff; border:0;">
                 </div>
                 <p style="margin: 5px 0 0 0; font-size: 9px; color: #666; max-width: 400px; background-color: #ffffff;">
                   <strong style="background-color: #ffffff;">Confidentiality & Disclaimer</strong><br>
@@ -190,7 +183,7 @@ html_content = """<!DOCTYPE html>
           </table>
         </div>`;
 
-      signaturePreview.innerHTML = signature;
+      signaturePreview.innerHTML = signature.replace(/__CERT_SRC__/g, CERT_IMAGE_SRC);
     }
 
     function copySignature() {
@@ -217,10 +210,10 @@ html_content = """<!DOCTYPE html>
   </script>
 </body>
 </html>
-""".replace("%(DATAURI)s", data_uri)
+""".replace("__CERT_SRC__", cert_src)
 
-out_path = "/mnt/data/email_signature_generator_with_cert_image.html"
-with open(out_path, "w", encoding="utf-8") as f:
-    f.write(html_content)
+out_path2 = "/mnt/data/email_signature_generator_cert_by_path.html"
+with open(out_path2, "w", encoding="utf-8") as f:
+    f.write(html2)
 
-out_path, len(html_content)
+out_path2
