@@ -1,218 +1,90 @@
-<!DOCTYPE html>
+# Encode the provided image as a base64 data URI and write an updated HTML file
+import base64, os, textwrap, json, pathlib
+
+img_path = "/mnt/data/79bcdea2-7e33-4b39-821a-3e0438ebbd09.png"
+with open(img_path, "rb") as f:
+    b64 = base64.b64encode(f.read()).decode("ascii")
+data_uri = f"data:image/png;base64,{b64}"
+
+# Create an updated HTML with the image inserted ABOVE the confidentiality paragraph
+html_content = """<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Email Signature Generator</title>
+  <title>Email Signature Generator (with Cert Image)</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 16px;
-      background: #f3f4f6;
-    }
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      display: flex;
-      gap: 24px;
-    }
-    .form-section {
-      flex: 1;
-    }
-    .preview-section {
-      flex: 1;
-    }
-    .card {
-      background: white;
-      border-radius: 8px;
-      padding: 24px;
-      margin-bottom: 24px;
-      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-    }
-    .form-group {
-      margin-bottom: 16px;
-    }
-    .form-group label {
-      display: block;
-      margin-bottom: 4px;
-      font-size: 14px;
-      font-weight: 500;
-    }
-    .form-control {
-      width: 100%;
-      padding: 8px;
-      border: 1px solid #d1d5db;
-      border-radius: 4px;
-      box-sizing: border-box;
-    }
-    .grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
-    }
-    .grid-3 {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 16px;
-    }
-    .preview-container {
-      border: 1px solid #d1d5db;
-      padding: 24px;
-      border-radius: 4px;
-      margin-bottom: 16px;
-      background-color: #ffffff;
-      min-height: 300px;
-    }
-    .btn {
-      background: #2563eb;
-      color: white;
-      padding: 8px 16px;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-    }
-    .btn:hover {
-      background: #1d4ed8;
-    }
-    .notification {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      padding: 15px 25px;
-      background-color: #059669;
-      color: white;
-      border-radius: 4px;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-      transition: transform 0.3s, opacity 0.3s;
-      transform: translateY(-100px);
-      opacity: 0;
-      z-index: 1000;
-    }
-    .notification.show {
-      transform: translateY(0);
-      opacity: 1;
-    }
-    .section-divider {
-      margin: 24px 0 16px 0;
-      border-top: 1px solid #e5e7eb;
-      padding-top: 16px;
-      font-weight: 600;
-      color: #374151;
-    }
-    @media (max-width: 768px) {
-      .container {
-        flex-direction: column;
-      }
-      .grid-3 {
-        grid-template-columns: 1fr;
-      }
-    }
+    body { font-family: Arial, sans-serif; margin: 0; padding: 16px; background: #f3f4f6; }
+    .container { max-width: 1200px; margin: 0 auto; display: flex; gap: 24px; }
+    .form-section { flex: 1; }
+    .preview-section { flex: 1; }
+    .card { background: white; border-radius: 8px; padding: 24px; margin-bottom: 24px; box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05); }
+    .form-group { margin-bottom: 16px; }
+    .form-group label { display: block; margin-bottom: 4px; font-size: 14px; font-weight: 500; }
+    .form-control { width: 100%; padding: 8px; border: 1px solid #d1d5db; border-radius: 4px; box-sizing: border-box; }
+    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+    .preview-container { border: 1px solid #d1d5db; padding: 24px; border-radius: 4px; margin-bottom: 16px; background-color: #ffffff; min-height: 300px; }
+    .btn { background: #2563eb; color: white; padding: 8px 16px; border: none; border-radius: 4px; cursor: pointer; }
+    .btn:hover { background: #1d4ed8; }
+    .notification { position: fixed; top: 20px; right: 20px; padding: 15px 25px; background-color: #059669; color: white; border-radius: 4px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); transition: transform 0.3s, opacity 0.3s; transform: translateY(-100px); opacity: 0; z-index: 1000; }
+    .notification.show { transform: translateY(0); opacity: 1; }
+    .section-divider { margin: 24px 0 16px 0; border-top: 1px solid #e5e7eb; padding-top: 16px; font-weight: 600; color: #374151; }
+    @media (max-width: 768px) { .container { flex-direction: column; } .grid-3 { grid-template-columns: 1fr; } }
   </style>
 </head>
 <body>
   <div class="container">
-    <!-- Input Form (Left) -->
     <div class="form-section">
       <div class="card">
         <h2>Email Signature Generator</h2>
-        
         <div class="form-group">
           <label>Company</label>
           <select id="company" class="form-control">
-          <option value="sonic-hq">SONIC INTERFREIGHT PUBLIC COMPANY LIMITED (HEAD OFFICE)</option>
-          <option value="grandlink">GRANDLINK LOGISTICS CO., LTD.</option>
-          <option value="sonic-b1">SONIC INTERFREIGHT PUBLIC COMPANY LIMITED (BRANCH 00001)</option>
-          <option value="sonic-b2">SONIC INTERFREIGHT PUBLIC COMPANY LIMITED (BRANCH 00002)</option>
-          <option value="sonic-b3">SONIC INTERFREIGHT PUBLIC COMPANY LIMITED (BRANCH 00003)</option>
-          <option value="sonic-b4">SONIC INTERFREIGHT PUBLIC COMPANY LIMITED (BRANCH 00004)</option>
-          <option value="sonic-b5">SONIC INTERFREIGHT PUBLIC COMPANY LIMITED (BRANCH 00005)</option>
-          <option value="sonic-auto-hq">SONIC AUTOLOGIS CO., LTD. (HEAD OFFICE)</option>
-          <option value="sonic-auto-b1">SONIC AUTOLOGIS CO., LTD. (BRANCH 00001)</option>
-          <option value="sonic-auto-b2">SONIC AUTOLOGIS CO., LTD. (BRANCH 00002)</option>
-          <option value="sonic-auto-b3">SONIC AUTOLOGIS CO., LTD. (BRANCH 00003)</option>
-          <option value="sonic-inter-b6">SONIC INTERFREIGHT CO.,LTD. (BRANCH 00006)</option>
+            <option value="sonic-hq">SONIC INTERFREIGHT PUBLIC COMPANY LIMITED (HEAD OFFICE)</option>
+            <option value="grandlink">GRANDLINK LOGISTICS CO., LTD.</option>
+            <option value="sonic-b1">SONIC INTERFREIGHT PUBLIC COMPANY LIMITED (BRANCH 00001)</option>
+            <option value="sonic-b2">SONIC INTERFREIGHT PUBLIC COMPANY LIMITED (BRANCH 00002)</option>
+            <option value="sonic-b3">SONIC INTERFREIGHT PUBLIC COMPANY LIMITED (BRANCH 00003)</option>
+            <option value="sonic-b4">SONIC INTERFREIGHT PUBLIC COMPANY LIMITED (BRANCH 00004)</option>
+            <option value="sonic-b5">SONIC INTERFREIGHT PUBLIC COMPANY LIMITED (BRANCH 00005)</option>
+            <option value="sonic-auto-hq">SONIC AUTOLOGIS CO., LTD. (HEAD OFFICE)</option>
+            <option value="sonic-auto-b1">SONIC AUTOLOGIS CO., LTD. (BRANCH 00001)</option>
+            <option value="sonic-auto-b2">SONIC AUTOLOGIS CO., LTD. (BRANCH 00002)</option>
+            <option value="sonic-auto-b3">SONIC AUTOLOGIS CO., LTD. (BRANCH 00003)</option>
+            <option value="sonic-inter-b6">SONIC INTERFREIGHT CO.,LTD. (BRANCH 00006)</option>
           </select>
         </div>
-        
         <div class="grid">
-          <div class="form-group">
-            <label>First Name</label>
-            <input type="text" id="firstName" class="form-control">
-          </div>
-          <div class="form-group">
-            <label>Last Name</label>
-            <input type="text" id="lastName" class="form-control">
-          </div>
+          <div class="form-group"><label>First Name</label><input type="text" id="firstName" class="form-control"></div>
+          <div class="form-group"><label>Last Name</label><input type="text" id="lastName" class="form-control"></div>
         </div>
-        
-        <div class="form-group">
-          <label>Nickname (will display in parentheses after surname)</label>
-          <input type="text" id="nickname" class="form-control">
-        </div>
-        
-        <div class="form-group">
-          <label>Department</label>
-          <input type="text" id="department" class="form-control">
-        </div>
-        
-        <div class="form-group">
-          <label>Position</label>
-          <input type="text" id="position" class="form-control">
-        </div>
-        
+        <div class="form-group"><label>Nickname (will display in parentheses after surname)</label><input type="text" id="nickname" class="form-control"></div>
+        <div class="form-group"><label>Department</label><input type="text" id="department" class="form-control"></div>
+        <div class="form-group"><label>Position</label><input type="text" id="position" class="form-control"></div>
         <div class="grid">
-          <div class="form-group">
-            <label>Office Phone</label>
-            <input type="text" id="office" class="form-control">
-          </div>
-          <div class="form-group">
-            <label>Extension</label>
-            <input type="text" id="extension" class="form-control">
-          </div>
+          <div class="form-group"><label>Office Phone</label><input type="text" id="office" class="form-control"></div>
+          <div class="form-group"><label>Extension</label><input type="text" id="extension" class="form-control"></div>
         </div>
-        
-        <div class="form-group">
-          <label>Mobile</label>
-          <input type="text" id="mobile" class="form-control">
-        </div>
-        
-        <div class="form-group">
-          <label>Email</label>
-          <input type="email" id="email" class="form-control">
-        </div>
-        
+        <div class="form-group"><label>Mobile</label><input type="text" id="mobile" class="form-control"></div>
+        <div class="form-group"><label>Email</label><input type="email" id="email" class="form-control"></div>
         <div class="section-divider">Social Media IDs</div>
-        
         <div class="grid-3">
-          <div class="form-group">
-            <label>LINE ID</label>
-            <input type="text" id="lineId" class="form-control">
-          </div>
-          <div class="form-group">
-            <label>WhatsApp</label>
-            <input type="text" id="whatsapp" class="form-control">
-          </div>
-          <div class="form-group">
-            <label>WeChat ID</label>
-            <input type="text" id="wechat" class="form-control">
-          </div>
+          <div class="form-group"><label>LINE ID</label><input type="text" id="lineId" class="form-control"></div>
+          <div class="form-group"><label>WhatsApp</label><input type="text" id="whatsapp" class="form-control"></div>
+          <div class="form-group"><label>WeChat ID</label><input type="text" id="wechat" class="form-control"></div>
         </div>
       </div>
     </div>
-    
-    <!-- Preview (Right) -->
     <div class="preview-section">
       <div class="card">
         <h2>Preview</h2>
         <div class="preview-container" id="previewContainer">
           <div id="signaturePreview">
-            <!-- Signature will be generated here -->
             <p>Fill in your details to preview signature</p>
           </div>
         </div>
         <button class="btn" id="copyButton">Copy Signature</button>
-        
         <p style="margin-top: 16px; color: #666; font-size: 13px;">
           ℹ️ To use in Outlook Web:
           <br>1. Click "Copy Signature" above
@@ -223,124 +95,37 @@
       </div>
     </div>
   </div>
-  
   <div id="notification" class="notification">Signature copied to clipboard!</div>
-  
   <script>
-    // Company data with absolute URLs for logos
     const companies = {
-      "sonic-hq": {
-        name: "SONIC INTERFREIGHT PUBLIC COMPANY LIMITED",
-        branchCode: "(HEAD OFFICE)",
-        address: "79/349-350 Sathupradit Road, Chongnonsee, Yannawa, Bangkok 10120, Thailand",
-        taxId: "0107560000427",
-        logo: "Logo/logo Sonic_e-mail.png" // Use absolute URL
-      },
-      "grandlink": {
-        name: "GRANDLINK LOGISTICS CO., LTD.",
-        branchCode: "",
-        address: "79/349-350 Sathupradit Road, Chongnonsee, Yannawa, Bangkok 10120, Thailand",
-        taxId: "0105558158599",
-        logo: "Logo/Logo Grandlink_e-mail.png" // Use absolute URL
-      },
-      "sonic-b1": {
-        name: "SONIC INTERFREIGHT PUBLIC COMPANY LIMITED",
-        branchCode: "(BRANCH 00001)",
-        address: "84 Moo 15, Soi King Kaew 21, King Kaew Road, Bang Phli Yai Sub-district, Bang Phli District, Samut Prakan 10540, Thailand",
-        taxId: "0107560000427",
-        logo: "Logo/logo Sonic_e-mail.png" // Use absolute URL
-      },
-      "sonic-b2": {
-        name: "SONIC INTERFREIGHT PUBLIC COMPANY LIMITED",
-        branchCode: "(BRANCH 00002)",
-        address: "84/1 Moo 15, King Kaew Road, Bang Phli Yai Sub-district, Bang Phli District, Samut Prakan 10540, Thailand",
-        taxId: "0107560000427",
-        logo: "Logo/logo Sonic_e-mail.png" // Use absolute URL
-      },
-      "sonic-b3": {
-        name: "SONIC INTERFREIGHT PUBLIC COMPANY LIMITED",
-        branchCode: "(BRANCH 00003)",
-        address: "106/45-46 Moo 9, Thung Sukhla Sub-district, Si Racha District, Chonburi 20230, Thailand",
-        taxId: "0107560000427",
-        logo: "Logo/logo Sonic_e-mail.png" // Use absolute URL
-      },
-      "sonic-b4": {
-        name: "SONIC INTERFREIGHT PUBLIC COMPANY LIMITED",
-        branchCode: "(BRANCH 00004)",
-        address: "509/10 Moo 3, Nong Kham Sub-district, Si Racha District, Chonburi 20110, Thailand",
-        taxId: "0107560000427",
-        logo: "Logo/logo Sonic_e-mail.png" // Use absolute URL
-      },
-      "sonic-b5": {
-        name: "SONIC INTERFREIGHT PUBLIC COMPANY LIMITED",
-        branchCode: "(BRANCH 00006)",
-        address: "789/3 Moo 9, Bang Pla Sub-district, Bang Phli District, Samut Prakan 10540, Thailand",
-        taxId: "0107560000427",
-        logo: "Logo/logo Sonic_e-mail.png" // Use absolute URL
-      },
-      "sonic-auto-hq": {
-        name: "SONIC AUTOLOGIS CO., LTD.",
-        branchCode: "(HEAD OFFICE)",
-        address: "79/349-350 Sathupradit Road, Chongnonsee, Yannawa, Bangkok 10120, Thailand",
-        taxId: "0105568017319",
-        logo: "Logo/logo Sonic AutoLogis_e-mail.png" // Use absolute URL
-      },
-      "sonic-auto-b1": {
-        name: "SONIC AUTOLOGIS CO., LTD.",
-        branchCode: "(BRANCH 00001)",
-        address: "84 Moo 15, Soi King Kaew 21, King Kaew Road, Bang Phli Yai Sub-district, Bang Phli District, Samut Prakan 10540, Thailand",
-        taxId: "0105568017319",
-        logo: "Logo/logo Sonic AutoLogis_e-mail.png" // Use absolute URL
-      },
-      "sonic-auto-b2": {
-        name: "SONIC AUTOLOGIS CO., LTD.",
-        branchCode: "(BRANCH 00002)",
-        address: "84/1 Moo 15, King Kaew Road, Bang Phli Yai Sub-district, Bang Phli District, Samut Prakan 10540, Thailand",
-        taxId: "0105568017319",
-        logo: "Logo/logo Sonic AutoLogis_e-mail.png" // Use absolute URL
-      },
-      "sonic-auto-b3": {
-        name: "SONIC AUTOLOGIS CO., LTD.",
-        branchCode: "(BRANCH 00003)",
-        address: "789/3 Moo 9, Bang Pla Sub-district, Bang Phli District, Samut Prakan 10540, Thailand",
-        taxId: "0105568017319",
-        logo: "Logo/logo Sonic AutoLogis_e-mail.png" // Use absolute URL
-      },
+      "sonic-hq": { name: "SONIC INTERFREIGHT PUBLIC COMPANY LIMITED", branchCode: "(HEAD OFFICE)", address: "79/349-350 Sathupradit Road, Chongnonsee, Yannawa, Bangkok 10120, Thailand", taxId: "0107560000427", logo: "Logo/logo Sonic_e-mail.png" },
+      "grandlink": { name: "GRANDLINK LOGISTICS CO., LTD.", branchCode: "", address: "79/349-350 Sathupradit Road, Chongnonsee, Yannawa, Bangkok 10120, Thailand", taxId: "0105558158599", logo: "Logo/Logo Grandlink_e-mail.png" },
+      "sonic-b1": { name: "SONIC INTERFREIGHT PUBLIC COMPANY LIMITED", branchCode: "(BRANCH 00001)", address: "84 Moo 15, Soi King Kaew 21, King Kaew Road, Bang Phli Yai Sub-district, Bang Phli District, Samut Prakan 10540, Thailand", taxId: "0107560000427", logo: "Logo/logo Sonic_e-mail.png" },
+      "sonic-b2": { name: "SONIC INTERFREIGHT PUBLIC COMPANY LIMITED", branchCode: "(BRANCH 00002)", address: "84/1 Moo 15, King Kaew Road, Bang Phli Yai Sub-district, Bang Phli District, Samut Prakan 10540, Thailand", taxId: "0107560000427", logo: "Logo/logo Sonic_e-mail.png" },
+      "sonic-b3": { name: "SONIC INTERFREIGHT PUBLIC COMPANY LIMITED", branchCode: "(BRANCH 00003)", address: "106/45-46 Moo 9, Thung Sukhla Sub-district, Si Racha District, Chonburi 20230, Thailand", taxId: "0107560000427", logo: "Logo/logo Sonic_e-mail.png" },
+      "sonic-b4": { name: "SONIC INTERFREIGHT PUBLIC COMPANY LIMITED", branchCode: "(BRANCH 00004)", address: "509/10 Moo 3, Nong Kham Sub-district, Si Racha District, Chonburi 20110, Thailand", taxId: "0107560000427", logo: "Logo/logo Sonic_e-mail.png" },
+      "sonic-b5": { name: "SONIC INTERFREIGHT PUBLIC COMPANY LIMITED", branchCode: "(BRANCH 00006)", address: "789/3 Moo 9, Bang Pla Sub-district, Bang Phli District, Samut Prakan 10540, Thailand", taxId: "0107560000427", logo: "Logo/logo Sonic_e-mail.png" },
+      "sonic-auto-hq": { name: "SONIC AUTOLOGIS CO., LTD.", branchCode: "(HEAD OFFICE)", address: "79/349-350 Sathupradit Road, Chongnonsee, Yannawa, Bangkok 10120, Thailand", taxId: "0105568017319", logo: "Logo/logo Sonic AutoLogis_e-mail.png" },
+      "sonic-auto-b1": { name: "SONIC AUTOLOGIS CO., LTD.", branchCode: "(BRANCH 00001)", address: "84 Moo 15, Soi King Kaew 21, King Kaew Road, Bang Phli Yai Sub-district, Bang Phli District, Samut Prakan 10540, Thailand", taxId: "0105568017319", logo: "Logo/logo Sonic AutoLogis_e-mail.png" },
+      "sonic-auto-b2": { name: "SONIC AUTOLOGIS CO., LTD.", branchCode: "(BRANCH 00002)", address: "84/1 Moo 15, King Kaew Road, Bang Phli Yai Sub-district, Bang Phli District, Samut Prakan 10540, Thailand", taxId: "0105568017319", logo: "Logo/logo Sonic AutoLogis_e-mail.png" },
+      "sonic-auto-b3": { name: "SONIC AUTOLOGIS CO., LTD.", branchCode: "(BRANCH 00003)", address: "789/3 Moo 9, Bang Pla Sub-district, Bang Phli District, Samut Prakan 10540, Thailand", taxId: "0105568017319", logo: "Logo/logo Sonic AutoLogis_e-mail.png" }
     };
-    
-    // Social media logos (Use absolute URLs)
-    const socialMediaLogos = {
-      line: "Logo/Line.png", // Replace with actual path or Base64 code
-      whatsapp: "Logo/Whatsapp.png", // Replace with actual path or Base64 code
-      wechat: "Logo/Wechat.png" // Replace with actual path or Base64 code
-    };
-    
-    // DOM elements
+    const socialMediaLogos = { line: "Logo/Line.png", whatsapp: "Logo/Whatsapp.png", wechat: "Logo/Wechat.png" };
+    // Certificate image as inline base64 so it always renders in signatures
+    const CERT_IMAGE_DATA_URI = "%(DATAURI)s";
+
     const copyButton = document.getElementById('copyButton');
     const signaturePreview = document.getElementById('signaturePreview');
     const notification = document.getElementById('notification');
-    
-    // Add event listeners
+
     copyButton.addEventListener('click', copySignature);
-    
-    // Add input event listeners to all form fields
-    document.getElementById('company').addEventListener('change', generateSignature);
-    document.getElementById('firstName').addEventListener('input', generateSignature);
-    document.getElementById('lastName').addEventListener('input', generateSignature);
-    document.getElementById('nickname').addEventListener('input', generateSignature);
-    document.getElementById('department').addEventListener('input', generateSignature);
-    document.getElementById('position').addEventListener('input', generateSignature);
-    document.getElementById('office').addEventListener('input', generateSignature);
-    document.getElementById('extension').addEventListener('input', generateSignature);
-    document.getElementById('mobile').addEventListener('input', generateSignature);
-    document.getElementById('email').addEventListener('input', generateSignature);
-    document.getElementById('lineId').addEventListener('input', generateSignature);
-    document.getElementById('whatsapp').addEventListener('input', generateSignature);
-    document.getElementById('wechat').addEventListener('input', generateSignature);
-    
-    // Generate signature based on form inputs
+    ['company','firstName','lastName','nickname','department','position','office','extension','mobile','email','lineId','whatsapp','wechat'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.addEventListener('input', generateSignature);
+      if (id === 'company' && el) el.addEventListener('change', generateSignature);
+    });
+
     function generateSignature() {
-      // Get form values
       const companyKey = document.getElementById('company').value;
       const firstName = document.getElementById('firstName').value || '';
       const lastName = document.getElementById('lastName').value || '';
@@ -354,48 +139,21 @@
       const lineId = document.getElementById('lineId').value || '';
       const whatsapp = document.getElementById('whatsapp').value || '';
       const wechat = document.getElementById('wechat').value || '';
-      
-      // Get company data
+
       const company = companies[companyKey] || companies["sonic-hq"];
-      
-      // Format names
       const formattedFirstName = firstName ? firstName.charAt(0).toUpperCase() + firstName.slice(1).toLowerCase() : '';
       const formattedLastName = lastName ? lastName.toUpperCase() : '';
       const formattedNickname = nickname ? ` (${nickname})` : '';
-      
-      // Create social media HTML
+
       let socialMediaHtml = '';
       if (lineId || whatsapp || wechat) {
         socialMediaHtml = '<p style="margin: 5px 0 0 0; font-size: 12px; display: flex; align-items: center; background-color: #ffffff;">';
-        
-        if (lineId) {
-          socialMediaHtml += `
-            <span style="display: inline-flex; align-items: center; margin-right: 10px; background-color: #ffffff;">
-              <img src="${socialMediaLogos.line}" alt="LINE" width="16" height="16" style="vertical-align: middle; margin-right: 3px; background-color: #ffffff;"> 
-              <span style="color: #047857; background-color: #ffffff;">LINE:</span> ${lineId}
-            </span>`;
-        }
-        
-        if (whatsapp) {
-          socialMediaHtml += `
-            <span style="display: inline-flex; align-items: center; margin-right: 10px; background-color: #ffffff;">
-              <img src="${socialMediaLogos.whatsapp}" alt="WhatsApp" width="16" height="16" style="vertical-align: middle; margin-right: 3px; background-color: #ffffff;"> 
-              <span style="color: #047857; background-color: #ffffff;">WhatsApp:</span> ${whatsapp}
-            </span>`;
-        }
-        
-        if (wechat) {
-          socialMediaHtml += `
-            <span style="display: inline-flex; align-items: center; background-color: #ffffff;">
-              <img src="${socialMediaLogos.wechat}" alt="WeChat" width="16" height="16" style="vertical-align: middle; margin-right: 3px; background-color: #ffffff;"> 
-              <span style="color: #047857; background-color: #ffffff;">WeChat:</span> ${wechat}
-            </span>`;
-        }
-        
+        if (lineId) { socialMediaHtml += `<span style="display: inline-flex; align-items: center; margin-right: 10px; background-color: #ffffff;"><img src="${socialMediaLogos.line}" alt="LINE" width="16" height="16" style="vertical-align: middle; margin-right: 3px; background-color: #ffffff;"><span style="color: #047857; background-color: #ffffff;">LINE:</span> ${lineId}</span>`; }
+        if (whatsapp) { socialMediaHtml += `<span style="display: inline-flex; align-items: center; margin-right: 10px; background-color: #ffffff;"><img src="${socialMediaLogos.whatsapp}" alt="WhatsApp" width="16" height="16" style="vertical-align: middle; margin-right: 3px; background-color: #ffffff;"><span style="color: #047857; background-color: #ffffff;">WhatsApp:</span> ${whatsapp}</span>`; }
+        if (wechat) { socialMediaHtml += `<span style="display: inline-flex; align-items: center; background-color: #ffffff;"><img src="${socialMediaLogos.wechat}" alt="WeChat" width="16" height="16" style="vertical-align: middle; margin-right: 3px; background-color: #ffffff;"><span style="color: #047857; background-color: #ffffff;">WeChat:</span> ${wechat}</span>`; }
         socialMediaHtml += '</p>';
       }
-      
-      // Create signature HTML with explicit background colors
+
       const signature = `
         <div style="font-family: Arial, sans-serif; max-width: 600px; background-color: #ffffff;">
           <div style="margin-bottom: 10px; font-size: 16px; font-weight: bold; color: #333; background-color: #ffffff;">Best Regards,<br></div>
@@ -419,6 +177,10 @@
                   ${email ? `<span style="color: #047857; background-color: #ffffff;">Email:</span> <a href="mailto:${email}" style="color: #2563eb; background-color: #ffffff;">${email}</a>` : ''}
                 </p>
                 ${socialMediaHtml}
+                <!-- Insert certification image ABOVE the confidentiality paragraph -->
+                <div style="margin: 8px 0 4px 0; background-color: #ffffff;">
+                  <img src="${CERT_IMAGE_DATA_URI}" alt="Sonic Group Certifications" style="display:block; max-width: 420px; width: 100%; height: auto; background-color:#ffffff; border:0;">
+                </div>
                 <p style="margin: 5px 0 0 0; font-size: 9px; color: #666; max-width: 400px; background-color: #ffffff;">
                   <strong style="background-color: #ffffff;">Confidentiality & Disclaimer</strong><br>
                   The information contained in this email may be confidential, proprietary and/or legally privileged. If you are not the intended recipient of this email, please delete and destroy all copies immediately. Any review, dissemination, copy, retransmission, distribution or use of this email in any form for any purpose is strictly prohibited. The sender accepted no responsibility for any miss transmission of, or interference with, this email. Thank you.
@@ -426,47 +188,39 @@
               </td>
             </tr>
           </table>
-        </div>
-      `;
-      
-      // Update preview
+        </div>`;
+
       signaturePreview.innerHTML = signature;
     }
-    
-    // Copy signature to clipboard
+
     function copySignature() {
-      // Create a temporary div for the signature
       const tempDiv = document.createElement('div');
       tempDiv.innerHTML = signaturePreview.innerHTML;
       document.body.appendChild(tempDiv);
-      
-      // Select the content
       const range = document.createRange();
       range.selectNode(tempDiv);
       window.getSelection().removeAllRanges();
       window.getSelection().addRange(range);
-      
-      // Execute copy command
       try {
         document.execCommand('copy');
         notification.classList.add('show');
-        setTimeout(() => {
-          notification.classList.remove('show');
-        }, 3000);
+        setTimeout(() => { notification.classList.remove('show'); }, 3000);
       } catch (err) {
         console.error('Failed to copy: ', err);
         alert('Copy failed. Please try again.');
       }
-      
-      // Clean up
       window.getSelection().removeAllRanges();
       document.body.removeChild(tempDiv);
     }
-    
-    // Initial signature generation
-    window.onload = function() {
-      generateSignature();
-    };
+
+    window.onload = function() { generateSignature(); };
   </script>
 </body>
 </html>
+""".replace("%(DATAURI)s", data_uri)
+
+out_path = "/mnt/data/email_signature_generator_with_cert_image.html"
+with open(out_path, "w", encoding="utf-8") as f:
+    f.write(html_content)
+
+out_path, len(html_content)
