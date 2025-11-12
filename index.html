@@ -1,18 +1,15 @@
-# Regenerate using a safe placeholder for the cert image path to avoid f-string collisions
-cert_src = "Logo/All Logo Cer_Sonic Group-for email signature.png"
-
-html2 = """<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Email Signature Generator (cert image by path)</title>
+  <title>Email Signature Generator</title>
   <style>
     body { font-family: Arial, sans-serif; margin: 0; padding: 16px; background: #f3f4f6; }
     .container { max-width: 1200px; margin: 0 auto; display: flex; gap: 24px; }
     .form-section { flex: 1; }
     .preview-section { flex: 1; }
-    .card { background: white; border-radius: 8px; padding: 24px; margin-bottom: 24px; box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05); }
+    .card { background: white; border-radius: 8px; padding: 24px; margin-bottom: 24px; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
     .form-group { margin-bottom: 16px; }
     .form-group label { display: block; margin-bottom: 4px; font-size: 14px; font-weight: 500; }
     .form-control { width: 100%; padding: 8px; border: 1px solid #d1d5db; border-radius: 4px; box-sizing: border-box; }
@@ -21,7 +18,7 @@ html2 = """<!DOCTYPE html>
     .preview-container { border: 1px solid #d1d5db; padding: 24px; border-radius: 4px; margin-bottom: 16px; background-color: #ffffff; min-height: 300px; }
     .btn { background: #2563eb; color: white; padding: 8px 16px; border: none; border-radius: 4px; cursor: pointer; }
     .btn:hover { background: #1d4ed8; }
-    .notification { position: fixed; top: 20px; right: 20px; padding: 15px 25px; background-color: #059669; color: white; border-radius: 4px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); transition: transform 0.3s, opacity 0.3s; transform: translateY(-100px); opacity: 0; z-index: 1000; }
+    .notification { position: fixed; top: 20px; right: 20px; padding: 15px 25px; background-color: #059669; color: white; border-radius: 4px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); transition: transform 0.3s, opacity 0.3s; transform: translateY(-100px); opacity: 0; z-index: 1000; }
     .notification.show { transform: translateY(0); opacity: 1; }
     .section-divider { margin: 24px 0 16px 0; border-top: 1px solid #e5e7eb; padding-top: 16px; font-weight: 600; color: #374151; }
     @media (max-width: 768px) { .container { flex-direction: column; } .grid-3 { grid-template-columns: 1fr; } }
@@ -29,6 +26,7 @@ html2 = """<!DOCTYPE html>
 </head>
 <body>
   <div class="container">
+    <!-- Input Form (Left) -->
     <div class="form-section">
       <div class="card">
         <h2>Email Signature Generator</h2>
@@ -70,6 +68,8 @@ html2 = """<!DOCTYPE html>
         </div>
       </div>
     </div>
+
+    <!-- Preview (Right) -->
     <div class="preview-section">
       <div class="card">
         <h2>Preview</h2>
@@ -79,6 +79,7 @@ html2 = """<!DOCTYPE html>
           </div>
         </div>
         <button class="btn" id="copyButton">Copy Signature</button>
+
         <p style="margin-top: 16px; color: #666; font-size: 13px;">
           ℹ️ To use in Outlook Web:
           <br>1. Click "Copy Signature" above
@@ -89,7 +90,9 @@ html2 = """<!DOCTYPE html>
       </div>
     </div>
   </div>
+
   <div id="notification" class="notification">Signature copied to clipboard!</div>
+
   <script>
     const companies = {
       "sonic-hq": { name: "SONIC INTERFREIGHT PUBLIC COMPANY LIMITED", branchCode: "(HEAD OFFICE)", address: "79/349-350 Sathupradit Road, Chongnonsee, Yannawa, Bangkok 10120, Thailand", taxId: "0107560000427", logo: "Logo/logo Sonic_e-mail.png" },
@@ -106,18 +109,25 @@ html2 = """<!DOCTYPE html>
     };
 
     const socialMediaLogos = { line: "Logo/Line.png", whatsapp: "Logo/Whatsapp.png", wechat: "Logo/Wechat.png" };
-    const CERT_IMAGE_SRC = "__CERT_SRC__";
 
     const copyButton = document.getElementById('copyButton');
     const signaturePreview = document.getElementById('signaturePreview');
     const notification = document.getElementById('notification');
 
     copyButton.addEventListener('click', copySignature);
-    ['company','firstName','lastName','nickname','department','position','office','extension','mobile','email','lineId','whatsapp','wechat'].forEach(id => {
-      const el = document.getElementById(id);
-      if (el) el.addEventListener('input', generateSignature);
-      if (id === 'company' && el) el.addEventListener('change', generateSignature);
-    });
+    document.getElementById('company').addEventListener('change', generateSignature);
+    document.getElementById('firstName').addEventListener('input', generateSignature);
+    document.getElementById('lastName').addEventListener('input', generateSignature);
+    document.getElementById('nickname').addEventListener('input', generateSignature);
+    document.getElementById('department').addEventListener('input', generateSignature);
+    document.getElementById('position').addEventListener('input', generateSignature);
+    document.getElementById('office').addEventListener('input', generateSignature);
+    document.getElementById('extension').addEventListener('input', generateSignature);
+    document.getElementById('mobile').addEventListener('input', generateSignature);
+    document.getElementById('email').addEventListener('input', generateSignature);
+    document.getElementById('lineId').addEventListener('input', generateSignature);
+    document.getElementById('whatsapp').addEventListener('input', generateSignature);
+    document.getElementById('wechat').addEventListener('input', generateSignature);
 
     function generateSignature() {
       const companyKey = document.getElementById('company').value;
@@ -171,9 +181,17 @@ html2 = """<!DOCTYPE html>
                   ${email ? `<span style="color: #047857; background-color: #ffffff;">Email:</span> <a href="mailto:${email}" style="color: #2563eb; background-color: #ffffff;">${email}</a>` : ''}
                 </p>
                 ${socialMediaHtml}
-                <div style="margin: 8px 0 4px 0; background-color: #ffffff;">
-                  <img src="__CERT_SRC__" alt="Sonic Group Certifications" style="display:block; max-width: 420px; width: 100%; height: auto; background-color:#ffffff; border:0;">
+
+                <!-- Certificate headline + image (image UNDER the "Certificate" headline) -->
+                <div style="margin: 8px 0 4px 0; background-color:#ffffff;">
+                  <div style="font-size:12px; font-weight:700; color:#1e3a8a; margin:6px 0 4px 0; background-color:#ffffff;">
+                    Certificate
+                  </div>
+                  <img src="Logo/All Logo Cer_Sonic Group-for email signature.png"
+                       alt="Sonic Group Certifications"
+                       style="display:block; max-width:420px; width:100%; height:auto; background-color:#ffffff; border:0;">
                 </div>
+
                 <p style="margin: 5px 0 0 0; font-size: 9px; color: #666; max-width: 400px; background-color: #ffffff;">
                   <strong style="background-color: #ffffff;">Confidentiality & Disclaimer</strong><br>
                   The information contained in this email may be confidential, proprietary and/or legally privileged. If you are not the intended recipient of this email, please delete and destroy all copies immediately. Any review, dissemination, copy, retransmission, distribution or use of this email in any form for any purpose is strictly prohibited. The sender accepted no responsibility for any miss transmission of, or interference with, this email. Thank you.
@@ -181,19 +199,22 @@ html2 = """<!DOCTYPE html>
               </td>
             </tr>
           </table>
-        </div>`;
+        </div>
+      `;
 
-      signaturePreview.innerHTML = signature.replace(/__CERT_SRC__/g, CERT_IMAGE_SRC);
+      signaturePreview.innerHTML = signature;
     }
 
     function copySignature() {
       const tempDiv = document.createElement('div');
       tempDiv.innerHTML = signaturePreview.innerHTML;
       document.body.appendChild(tempDiv);
+
       const range = document.createRange();
       range.selectNode(tempDiv);
       window.getSelection().removeAllRanges();
       window.getSelection().addRange(range);
+
       try {
         document.execCommand('copy');
         notification.classList.add('show');
@@ -202,6 +223,7 @@ html2 = """<!DOCTYPE html>
         console.error('Failed to copy: ', err);
         alert('Copy failed. Please try again.');
       }
+
       window.getSelection().removeAllRanges();
       document.body.removeChild(tempDiv);
     }
@@ -210,10 +232,3 @@ html2 = """<!DOCTYPE html>
   </script>
 </body>
 </html>
-""".replace("__CERT_SRC__", cert_src)
-
-out_path2 = "/mnt/data/email_signature_generator_cert_by_path.html"
-with open(out_path2, "w", encoding="utf-8") as f:
-    f.write(html2)
-
-out_path2
